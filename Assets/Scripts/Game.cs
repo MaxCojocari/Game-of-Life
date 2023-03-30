@@ -39,6 +39,7 @@ public class Game : MonoBehaviour
 
         //Create grid and fill it with cells
         CreateGrid(gridSizeX, gridSizeY);
+        slider.value = 1.5f;
     }
 
     private void Update()
