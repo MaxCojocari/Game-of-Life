@@ -202,6 +202,19 @@ public class Game : MonoBehaviour
                     result = 1;
                     rl = 4;
                 }
+
+                //Rule
+                if(state == 0 && count == 5)
+                {
+                     result = 1;
+                     rl = 1;
+                }
+
+                if(state == 1 && count == 6)
+                {
+                    result = 0;
+                    rl = 2;
+                }
                 // if (count % 2 != 0 && state == 1)
                 // {
                 //     result = 1;
