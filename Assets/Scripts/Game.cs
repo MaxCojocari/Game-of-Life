@@ -56,7 +56,7 @@ public class Game : MonoBehaviour
                 hit.collider.gameObject.GetComponent<Cell>().SetState(1, 0);
             }
         }
-        
+
         if (!buttonStartClicked)
         {
             if (toggle.isOn && eventCounter == 0)
@@ -71,7 +71,7 @@ public class Game : MonoBehaviour
             CancelInvoke("UpdateStates");
         }
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             //Apply the new mode per each cell
             for (int x = 0; x < gridSizeX; x++)
@@ -83,7 +83,30 @@ public class Game : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            //Apply the new mode per each cell
+            for (int x = 0; x < gridSizeX; x++)
+            {
+                for (int y = 0; y < gridSizeY; y++)
+                {
+                    cells[x, y].SetMode(1);
+                }
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            //Apply the new mode per each cell
+            for (int x = 0; x < gridSizeX; x++)
+            {
+                for (int y = 0; y < gridSizeY; y++)
+                {
+                    cells[x, y].SetMode(2);
+                }
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             //Apply the new mode per each cell
             for (int x = 0; x < gridSizeX; x++)
@@ -154,10 +177,15 @@ public class Game : MonoBehaviour
                 int count = GetLivingNeighbours(x, y);
 
                 //Check the rules and apply the correct state based on the result
-                if (state == 1 && count < 2)
-                {
+
+                if (state == 1 && count < 2) {
                     result = 0;
                     rl = 0;
+
+                    if (x > 30 && x < 142 && y > 25 && y < 83) {
+                        result = Random.Range(0, 2);
+                        rl = 0;
+                    }
                 }
                 if (state == 1 && (count == 2 || count == 3))
                 {
@@ -172,19 +200,13 @@ public class Game : MonoBehaviour
                 if (state == 0 && count == 3)
                 {
                     result = 1;
-                    rl = 3;
+                    rl = 4;
                 }
-
-                //Replace the above rules with this for cave generations
-                //Inspired by the Sebastian League video about cave gen
-                //if (count > 4)
-                //{
-                //    result = 1;
-                //}
-                //else if (count < 4)
-                //{
-                //    result = 0;
-                //}
+                // if (count % 2 != 0 && state == 1)
+                // {
+                //     result = 1;
+                //     rl = 4;
+                // }
 
                 //CREATE AN ARRAY AND COPY OVER THE WHOLE THING AND THEN APPLY THE RESULTS LATER
                 states[x, y] = result;
@@ -260,7 +282,7 @@ public class Game : MonoBehaviour
 	int col = (x + i + gridSizeX) % gridSizeX;
 	int row = (y + i + gridSizeY) % gridSizeY;
 
-//Put either 1 or 2 in the Start() to replace the one that is already there 
+//Put either 1 or 2 in the Start() to replace the one that is already there
 
 //1
     for (int x = 20; x < gridSizeX-20; x++)
@@ -279,5 +301,5 @@ public class Game : MonoBehaviour
             cells[x, y].SetState(Random.Range(-1,1) >= 0 ? 1: 0);
         }
     }
-	
+
  */

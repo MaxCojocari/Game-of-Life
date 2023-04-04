@@ -28,7 +28,8 @@ public class Cell : MonoBehaviour
         Color.blue,
         Color.green,
         Color.black,
-        Color.white
+        Color.white,
+        Color.red
     };
 
 
@@ -49,7 +50,7 @@ public class Cell : MonoBehaviour
         // Set cell's sprite
         SetSprite(newSpr);
     }
- 
+
     // Set the cells state and the rule that was used on it
     // newStatus - New status of the cell
     // r - Rule that was applied ot the cell
@@ -87,6 +88,9 @@ public class Cell : MonoBehaviour
         {
             case 0:
                 sprRend.color = new Color(state, state, state);
+                if(currentRl == 4) {
+                    sprRend.color = new Color(255, 0, 0);
+                }
                 break;
             case 1:
                 if (state == 1)
@@ -109,6 +113,9 @@ public class Cell : MonoBehaviour
                 break;
             case 3:
                 sprRend.color = col[currentRl];
+                break;
+            case 4:
+                sprRend.color = new Color(255, 0, 0);
                 break;
         }
     }
