@@ -14,7 +14,7 @@ public class Game : MonoBehaviour
     public Color red;
     public Color yellow;
 
-    [Range(0.00001f, 3f)] public float updateRate = 1f;
+    [Range(0.001f, 5f)] public float updateRate = 2.5f;
     public Text generationNr;
     public Text rateValue;
     public int counterGeneration;
@@ -39,7 +39,7 @@ public class Game : MonoBehaviour
 
         //Create grid and fill it with cells
         CreateGrid(gridSizeX, gridSizeY);
-        slider.value = 1.5f;
+        slider.value = 2.5f;
     }
 
     private void Update()
@@ -152,6 +152,8 @@ public class Game : MonoBehaviour
             for (int y = 0; y < gridSizeY; y++)
             {
                 cells[x, y].SetState(0, 0);
+                cells[x, y].age = 0;
+                cells[x, y].sprRend.color = new Color(0, 0, 0);
             }
         }
     }
@@ -182,7 +184,7 @@ public class Game : MonoBehaviour
                     result = 0;
                     rl = 0;
 
-                    if (x > 30 && x < 142 && y > 25 && y < 83) {
+                    if (x > 40 && x < 122 && y > 25 && y < 83) {
                         result = Random.Range(0, 2);
                         rl = 0;
                     }
@@ -200,26 +202,30 @@ public class Game : MonoBehaviour
                 if (state == 0 && count == 3)
                 {
                     result = 1;
-                    rl = 4;
+                    rl = 3;
                 }
 
-                //Rule
-                if(state == 0 && count == 5)
+                // New rules
+                // 1. Birth exception (strict number of neighbors == 5)
+                if (state == 0 && count == 5)
                 {
-                     result = 1;
-                     rl = 1;
+                    result = 1;
+                    rl = 1;
                 }
 
-                if(state == 1 && count == 6)
+                // 2. Dead excess (strict number of neighbors == 6)
+                if (state == 1 && count == 6)
                 {
                     result = 0;
-                    rl = 2;
                 }
-                // if (count % 2 != 0 && state == 1)
-                // {
-                //     result = 1;
-                //     rl = 4;
-                // }
+
+                // "Bermuda Triangle"
+                // If number of neighbors is a "triangle number" and
+                // cell is alive, it turns in red
+                if (state == 1 && (count == 1 || count == 3 || count == 6))
+                {
+                    rl = 4;
+                }
 
                 //CREATE AN ARRAY AND COPY OVER THE WHOLE THING AND THEN APPLY THE RESULTS LATER
                 states[x, y] = result;
@@ -288,31 +294,3 @@ public class Game : MonoBehaviour
         return count;
     }
 }
-
-//Cool Patterns When counting neighbourd incorrectly + random values at specific areas as example
-/*
-//put this in GetLivingNeighbours() instead of what is already there
-	int col = (x + i + gridSizeX) % gridSizeX;
-	int row = (y + i + gridSizeY) % gridSizeY;
-
-//Put either 1 or 2 in the Start() to replace the one that is already there
-
-//1
-    for (int x = 20; x < gridSizeX-20; x++)
-    {
-        for (int y = 20; y < gridSizeY-20; y++)
-        {
-            cells[x, y].SetState(Random.Range(-1,1) >= 0 ? 1: 0);
-        }
-    }
-
-//2
-    for (int x = 25; x < gridSizeX; x++)
-    {
-        for (int y = 25; y < gridSizeY; y++)
-        {
-            cells[x, y].SetState(Random.Range(-1,1) >= 0 ? 1: 0);
-        }
-    }
-
- */

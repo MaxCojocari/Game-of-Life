@@ -14,13 +14,13 @@ public class Cell : MonoBehaviour
     public int currentRl = 0;
 
     //Reference to the cell's SpriteRenderer
-    SpriteRenderer sprRend;
+    public SpriteRenderer sprRend;
 
     //Age of the tile
-    float age = 0;
+    public float age = 0;
 
     //Used for colour mode settings
-    int mode = 0;
+    public int mode = 0;
 
     //Those colours are used when the rule colour mode is on
     Color[] col = new Color[]
@@ -68,7 +68,6 @@ public class Cell : MonoBehaviour
         sprRend.color = new Color(state, state, state);
     }
 
-
     // Switch the current state to the opposite
     public void SwitchState()
     {
@@ -88,7 +87,8 @@ public class Cell : MonoBehaviour
         {
             case 0:
                 sprRend.color = new Color(state, state, state);
-                if(currentRl == 4) {
+                if (currentRl == 4)
+                {
                     sprRend.color = new Color(255, 0, 0);
                 }
                 break;
@@ -99,18 +99,18 @@ public class Cell : MonoBehaviour
                 }
                 sprRend.color = new Color(0, age, age);
                 break;
-            case 2:
-                if (state == 1)
-                {
-                    age += 0.03f;
-                    sprRend.color = new Color(0, age + state, age + state);
-                }
-                else
-                {
-                    //age -= 0.01f;
-                    sprRend.color = new Color(0, age, age);
-                }
-                break;
+            //case 2:
+            //    if (state == 1)
+            //    {
+            //        age += 0.03f;
+            //        sprRend.color = new Color(0, age + state, age + state);
+            //    }
+            //    else
+            //    {
+            //        //age -= 0.01f;
+            //        sprRend.color = new Color(0, age, age);
+            //    }
+            //    break;
             case 3:
                 sprRend.color = col[currentRl];
                 break;
